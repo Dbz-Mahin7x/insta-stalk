@@ -1,15 +1,34 @@
 {
+  "name": "insta-stalker-api",
   "version": 2,
   "builds": [
     {
-      "src": "api/insta-stalk.js",
-      "use": "@vercel/node"
+      "src": "api/insta_stalk.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "runtime": "python3.9"
+      }
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "api/insta-stalk.js"
+      "src": "/stalk/(.*)",
+      "dest": "api/insta_stalk.py"
+    },
+    {
+      "src": "/stalk",
+      "dest": "api/insta_stalk.py"
+    },
+    {
+      "src": "/",
+      "dest": "api/insta_stalk.py"
     }
-  ]
+  ],
+  "functions": {
+    "api/insta_stalk.py": {
+      "maxDuration": 10,
+      "memory": 1024
+    }
+  }
 }
